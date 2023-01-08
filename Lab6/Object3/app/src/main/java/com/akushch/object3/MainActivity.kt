@@ -19,37 +19,32 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Get the clipboard manager
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
 
-        // Check if there is data on the clipboard
         if (hasFocus) {
+            val numHorizontalLabels = 10
             val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            // Get the clipboard data
             val clip = clipboard.primaryClip
             val clipData = clip!!.getItemAt(0).text.toString()
 
-            // Split the clipboard data into a list of strings
             val dataPoints = clipData.split("\n")
 
-            // Create a list of DataPoint objects
             val points = mutableListOf<DataPoint>()
             for (i in dataPoints.indices) {
-                val x = i.toDouble()
+                val x = (i+1).toDouble()
                 val y = dataPoints[i].toDouble()
                 val point = DataPoint(x, y)
                 points.add(point)
             }
 
-            // Create a line graph series
             val series = LineGraphSeries<DataPoint>(points.toTypedArray())
             series.color = Color.RED
 
-            // Get the GraphView from the layout
             val graphView = findViewById<GraphView>(R.id.idGraphView)
+            graphView.gridLabelRenderer.numHorizontalLabels = numHorizontalLabels
             graphView.removeAllSeries()
             graphView.titleColor = Color.BLUE
             graphView.title = "Графік вектора"
@@ -60,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             graphView.viewport.setMinY(0.0)
             graphView.viewport.setMaxY(points.maxBy { it.y }!!.y)
 
-            // Add the series to the GraphView
             graphView.addSeries(series)
         }
     }

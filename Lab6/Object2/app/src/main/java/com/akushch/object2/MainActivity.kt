@@ -45,10 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         val numColumns = 7
 
-        // Set the number of decimal places to display
         val numDecimalPlaces = 2
 
-        // Add a row for each group of elements in the vector
         for (i in vector.indices step numColumns) {
             val row = TableRow(this)
             for (j in i until i + numColumns) {
