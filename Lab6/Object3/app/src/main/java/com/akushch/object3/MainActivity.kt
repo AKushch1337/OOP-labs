@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             val graphView = findViewById<GraphView>(R.id.idGraphView)
             graphView.removeAllSeries()
             graphView.titleColor = Color.BLUE
-            graphView.title = "My Graph"
+            graphView.title = "Графік вектора"
             graphView.viewport.isScalable = true
             graphView.viewport.isScrollable = true
             graphView.viewport.setMinX(0.0)

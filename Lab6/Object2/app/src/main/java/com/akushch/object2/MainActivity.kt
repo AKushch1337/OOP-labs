@@ -43,16 +43,27 @@ class MainActivity : AppCompatActivity() {
         val tableLayout = findViewById<TableLayout>(R.id.table_layout)
         tableLayout.removeAllViews()
 
-        for (i in vector.indices) {
+        val numColumns = 7
+
+        // Set the number of decimal places to display
+        val numDecimalPlaces = 2
+
+        // Add a row for each group of elements in the vector
+        for (i in vector.indices step numColumns) {
             val row = TableRow(this)
-            val indexTextView = TextView(this)
-            indexTextView.text = (i + 1).toString()
-            row.addView(indexTextView)
-            val valueTextView = TextView(this)
-            valueTextView.text = vector[i].toString()
-            row.addView(valueTextView)
+            for (j in i until i + numColumns) {
+                if (j >= vector.size) {
+                    break
+                }
+                val valueTextView = TextView(this)
+                val value = vector[j]
+                val formattedValue = String.format("%.${numDecimalPlaces}f", value)
+                valueTextView.text = formattedValue
+                row.addView(valueTextView)
+            }
             tableLayout.addView(row)
         }
+
 
         val clipString = vector.joinToString(separator = "\n")
 
@@ -61,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         val clip = ClipData.newPlainText("Vector Data", clipString)
 
         clipboard.setPrimaryClip(clip)
-    }}
+    }
+}
 
 
